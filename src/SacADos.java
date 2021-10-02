@@ -1,15 +1,14 @@
+import java.util.ArrayList;
+
 public class SacADos {
-    private Objet[] objets;
+    private ArrayList<Objet> objets;
     private String chemin;
     private float valeurTotale;
     private float poidsTotal;
     private float poidsMaximal;
 
-    public SacADos(){
-
-    }
-
     public SacADos(String chemin, float poidsMaximal) {
+        this.objets=new ArrayList<Objet>();
         this.chemin = chemin;
         this.poidsMaximal = poidsMaximal;
         this.valeurTotale = 0;
@@ -25,13 +24,16 @@ public class SacADos {
     }
 
     public String toString(){
-        return "";
+        StringBuilder sb = new StringBuilder();
+        for(Objet o : this.objets)
+            sb.append("> " + o.toString() + "\n");
+        return sb.toString();
     }
 
     // METHODES //
     public int ajouterObjet(Objet o){
         if(this.poidsTotal + o.getPds() <= this.poidsMaximal){
-            this.objets[this.objets.length] = o;
+            this.objets.add(o);
             this.poidsTotal += o.getPds();
             this.valeurTotale += o.getVal();
             return 1;
@@ -39,22 +41,23 @@ public class SacADos {
         return -1;
     }
 
+    /* vraiment utile comme méthode ?
     public int retirerObjet(int i){
         if(this.objets[i] != null){
-            this.objets[i] = null;
             this.poidsTotal -= this.objets[i].getPds();
             this.valeurTotale -= this.objets[i].getVal();
+            this.objets[i] = null; 
             return 1;
         }
         return -1;
-    }
+    } */
 
     public void resoudre(String methode){
         switch(methode){
             case "gloutonne":
                 gloutonne();
                 break;
-            case "prog dynamique":
+            case "progdynamique":
                 progDynamique();
                 break;
             case "pse":
@@ -63,10 +66,27 @@ public class SacADos {
         }
     }
 
+    /* Cette méthode permet de lire le fichier texte pointé par le chemin et retourner
+    un tableau les contenant
+    */
+    public Objet[] getObjetsChemin(){
+
+        return new Objet[0];
+    }
+
+    /* La méthode GLOUTONNE appelle la fonction quickSort qui va
+    trier les objets en fonction de le rapport valeur / poids 
+    par ordre décroissant et qui va essayer des les ajouter dans
+    le sac un à un.
+    */
     public void gloutonne(){
-        for(int i=0;i<this.objets.length;i++){
-            this.objets[i].getRapportValPds();
+        Objet[] objetsAajouter = getObjetsChemin();
+        int cpt = 0;
+        quickSort(0, objetsAajouter.length);
+        for(Objet o : objetsAajouter){
+            cpt = ajouterObjet(o) > 0 ? cpt + 1 : cpt;
         }
+        System.out.println(cpt + " objets sur " + objetsAajouter.length + "ont été ajoutés au sac à dos");
     }
 
     public void progDynamique(){
@@ -80,9 +100,9 @@ public class SacADos {
     // Echanger deux éléments (d'indices respectifs i et j) du tableau
     private void echanger(int i, int j)
     {
-        Objet temp = this.objets[i];
-        this.objets[i] = this.objets[j];
-        this.objets[j] = temp;
+        Objet temp = this.objets.get(i);
+        this.objets.set(i,this.objets.get(j));
+        this.objets.set(j, temp);
     }
     
     /* Cette fonction prend le dernier élément comme pivot, place
@@ -94,14 +114,14 @@ public class SacADos {
     {
         
         // pivot
-        float pivot = this.objets[high].getRapportValPds(); 
+        float pivot = this.objets.get(high).getRapportValPds(); 
         
         int i = low - 1;
         for(int j = low; j < high; j++)
         {
             
             // Si le rapport de l'objet actuel est plus grand que le pivot (car ordre décroissant)
-            if (this.objets[j].getRapportValPds() > pivot) 
+            if (this.objets.get(j).getRapportValPds() > pivot) 
             {
                 
                 // On incrémente l'index du plus grand élément

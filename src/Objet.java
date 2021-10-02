@@ -25,4 +25,8 @@ public class Objet {
     public float getRapportValPds() {
         return (this.valeur/this.poids);
     }
+    public String toString(){
+        String s = (this.nom + " ; " + this.poids + " ; " + this.valeur);
+        return s;
+    }
 }
