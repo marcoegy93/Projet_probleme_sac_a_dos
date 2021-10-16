@@ -1,0 +1,4 @@
+Lampe ; 13.0 ; 7.0
+Camping gaz ; 12.0 ; 4.0
+Sac de couchage ; 8.0 ; 3.0
+Couteau suisse ; 10.0 ; 3.0
