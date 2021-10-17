@@ -1,8 +1,23 @@
+/**
+ * Fichier : ProgDynamique.java
+ * Auteurs : BALAMON Marco, SAAVEDRA Arthur
+ * Date : 17/10/2021
+ */
 package methodes;
+
 import sacados.SacADos;
 import sacados.Objet;
 import java.util.List;
+
 public class ProgDynamique extends Methode {
+
+    // ------ MÉTHODES DE LA CLASSE ------ //
+    /**
+     * Méthode resoudre()
+     * Résout le problème du sac à dos en utilisant la méthode
+     * de programmation dynamique
+     * @param sac (SacADos)
+     */
     public static void resoudre(SacADos sac){
         List<Objet> objetsAajouter = sac.getObjetsChemin();
         int nbObjets = objetsAajouter.size();
@@ -23,19 +38,6 @@ public class ProgDynamique extends Methode {
             }
         }
 
-        // on va chercher le bénéfice le plus élevé de la matrice
-        /*float res = matriceObjets[nbObjets][(int)sac.getPoidsMaximal()];
-        int j = (int)sac.getPoidsMaximal();
-
-        int cpt = 0;
-        for (int i = nbObjets; i > 0  &&  res > 0; i--) {
-          if (res != matriceObjets[i - 1][j]) {
-            sac.ajouterObjet(objetsAajouter.get(i-1));
-            cpt++;
-            res -= objetsAajouter.get(i-1).getVal();
-            j -= objetsAajouter.get(i-1).getPds();
-          }
-        }*/
         int nbObjetsAajouter = objetsAajouter.size() - 1;
         int poidsMaximal = (int)sac.getPoidsMaximal();
         int cpt=0;
