@@ -1,14 +1,25 @@
+/**
+ * Fichier : PSE.java
+ * Auteurs : BALAMON Marco, SAAVEDRA Arthur
+ * Date : 17/10/2021
+ */
+
 package methodes;
+
+import arbre.ABR;
 import sacados.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import methodes.Methode;
 import sacados.Objet;
-import java.util.List;
-import java.util.ArrayList;
+
 public class PSE extends Methode {
+
+    // ------ MÉTHODES DE LA CLASSE ------ //
+    /**
+     * Méthode résoudre()
+     * Résout le problème du sac à dos en utilisant la méthode
+     * procédure par séparation et évaluation (PSE)
+     * @param sac (SacADos)
+     */
     public static void resoudre(SacADos sac){
         Objet[] tabObj = new Objet[sac.getObjetsChemin().size()];
         ABR arbre = new ABR(sac.getObjetsChemin(), sac.getPoidsMaximal(), tabObj, 0);
